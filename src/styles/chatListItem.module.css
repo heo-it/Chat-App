@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #ddd;
+  align-items: center;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  padding: 0.5rem 0.5rem;
+}
+
+.information {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.2rem;
+  align-items: center;
+}
+
+.name {
+  color: #6C6C6B;
+}
+
+.date {
+  font-size: small;
+  color: #A4A4A3;
+}
+
+.preview {
+  margin: 0;
+  font-size: small;
+  color: #A4A4A3;
+}
