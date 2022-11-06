@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import SideChatBar from '../components/SideChatBar';
+import Chatroom from 'components/Chatroom';
 
 const Home: NextPage = () => {
   return (
@@ -12,6 +13,7 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <SideChatBar />
+        <Chatroom />
       </main>
     </>
   )

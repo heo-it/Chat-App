@@ -1,0 +1,121 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 100vh;
+  background-color: #FFFFFF;
+  border: 1px solid #ddd;
+}
+
+.header {
+  height: 7rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.name {
+  font-weight: 500;
+  font-size: larger;
+  margin: 0.2rem 0;
+}
+
+.role {
+  margin: 0;
+  color: #00C9B0;
+}
+
+.chatBox {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: scroll;
+  margin: 0;
+  padding: 1rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+
+.hr {
+  display: flex;
+  align-items: center;
+  font-size: small;
+  color: #818078;
+  opacity: .5;
+}
+
+.hr::before,
+.hr::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  margin: 0 1em;
+  background: #A4A4A3;
+}
+
+.chatItem {
+  display: flex;
+  flex-direction: row; 
+  padding: 0.5rem 1rem;
+}
+
+.image {
+  flex-basis: 12rem;
+}
+
+.chatInfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem;
+}
+
+.chatInfo p {
+  margin: 0 0 0.3rem;
+}
+
+.sender {
+  color: #4D4C44;
+  font-size: large;
+}
+
+.text {
+  color: #4D4C44;
+  font-size: 0.95rem;
+}
+
+.sendDate {
+  font-size: small;
+  color: #818078;
+}
+
+.searchBox {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem;
+  border: 1px solid #ddd;
+}
+
+.searchArea {
+  height: 4rem;
+  outline: none;
+  margin: 0.5rem;
+  resize: none;
+}
+
+.buttonWrapper {
+  padding: 0.5rem;
+  border-top: 1px solid #ddd;
+  background-color: #FAFAFA;
+  text-align: end;
+}
+
+.button {
+  padding: 0.4rem 1rem;
+  color: #FFFFFF;
+  background-color: #00C9B0;
+  border-radius: 20px;
+}
