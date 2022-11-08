@@ -14,20 +14,6 @@ import {
   collection,
   query,
   orderBy,
-
-export interface ChatItem {
-  id: string,
-  sender: string,
-  createAt: {
-    seconds: number,
-    nanoseconds: number
-  },
-  message: string
-}
-
-interface Chat {
-  [key: string] : ChatItem[]
-}
   DocumentData,
 } from '@firebase/firestore';
 import { useDocument, useCollection } from 'react-firebase-hooks/firestore';

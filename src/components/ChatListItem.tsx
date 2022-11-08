@@ -1,7 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import styles from '../styles/chatListItem.module.css';
 import { BiUserCircle } from 'react-icons/bi';
-import { ChatItem } from './SideChatBar';
+interface ChatItem {
+  id: string,
+  sender: string,
+  createAt: {
+    seconds: number,
+    nanoseconds: number
+  },
+  message: string
+}
 
 type ChatListItemProps = {
   name: string,
