@@ -14,8 +14,6 @@ import {
   collection,
   query,
   orderBy,
-  DocumentData
-} from 'firebase/firestore/lite';
 
 export interface ChatItem {
   id: string,
@@ -30,6 +28,9 @@ export interface ChatItem {
 interface Chat {
   [key: string] : ChatItem[]
 }
+  DocumentData,
+} from '@firebase/firestore';
+import { useDocument, useCollection } from 'react-firebase-hooks/firestore';
 
 const SideChatBar: FunctionComponent = () => {
   const [chats, setChats] = useState<Chat>();
