@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import styles from '../styles/sideChatBar.module.css';
 import { BiSearch } from 'react-icons/bi';
 import ChatListItem from './ChatListItem';
@@ -33,31 +33,34 @@ interface Chat {
 import { useDocument, useCollection } from 'react-firebase-hooks/firestore';
 
 const SideChatBar: FunctionComponent = () => {
-  const [chats, setChats] = useState<Chat>();
+  const docRef = doc(db, "chat", me.email);
+  const [value] = useDocument(docRef);
+
+  const q = query(collection(db, `chat/${me.email}/message`), orderBy("createAt", "desc"));
+  const [snapshot] = useCollection(q);
 
   /**
    * @description 내 메세지 목록 불러오기
    */
-  const getChatList = async () => {
-    const docRef = doc(db, "chat", me.email); // yejin is test data
-    const docSnap = await getDoc(docRef);
-    const friendList = docSnap.exists() && docSnap.data().friends;
-
-    const q = query(collection(db, `chat/${me.email}/message`), orderBy("createAt", "desc"));
-    const querySnapshot = await getDocs(q);
-
-    friendList &&
-    setChats(Object.assign({}, ...friendList.map((name: string, i: number) => (
-      {
-        [name]:
-          querySnapshot.docs
+  const getChatList = () => {
+    const friends = value && value?.data() && value?.data()?.friends;
+    if (friends) {
+      const chats = Object.assign(
+        {},
+        ...friends.map((name: string) => ({
+          [name]: snapshot?.docs
             .filter((doc: DocumentData) => doc.data().sender === name)
-              .map((doc: DocumentData) => ({
-                id: doc.id,
-                ...doc.data(),
-              }))
-      }
-    ))));
+            .map((doc: DocumentData) => ({
+              id: doc.id,
+              ...doc.data(),
+            })),
+        })),
+      );
+
+      return Object.keys(chats).map((user, index) =>
+        <ChatListItem key={index} name={user} messages={chats[user]} />
+      )
+    }
   }
 
   /**
@@ -68,22 +71,16 @@ const SideChatBar: FunctionComponent = () => {
 
     if (!input) {
       return;
+      // TODO: email만 입력 가능하도록 제한 두어야함
     } else {
-      const docRef = doc(db, "chat", me.email);
-      const docSnap = await getDoc(docRef);
-
-      docSnap.exists() &&
-      docSnap.data().friends.includes(input) === false &&
+      value &&
+      value?.data() &&
+      value?.data()?.frends.includes(input) === false &&
       await updateDoc(docRef, {
         friends: arrayUnion(input)
       });
     }
-    // 메세지 추가 후 리스트 업데이트
   }
-
-  useEffect(() => {
-    getChatList();
-  }, []);
 
   return (
     <div className={styles.container}>
@@ -98,12 +95,7 @@ const SideChatBar: FunctionComponent = () => {
         </div>
       </div>
       <div className={styles.chatListWrapper}>
-        {
-          chats &&
-          Object.keys(chats).map((user, index) =>
-            <ChatListItem key={index} name={user} messages={chats[user]} />
-          )
-        }
+        {getChatList()}
       </div>
     </div>
   );
