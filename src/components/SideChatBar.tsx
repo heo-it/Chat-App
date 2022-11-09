@@ -3,6 +3,7 @@ import styles from '../styles/sideChatBar.module.css';
 import { BiSearch } from 'react-icons/bi';
 import ChatListItem from './ChatListItem';
 import me from '../user';
+import { useRouter } from "next/router";
 
 import { db } from '../firebase';
 import {
@@ -17,6 +18,7 @@ import {
 import { useDocument, useCollection } from 'react-firebase-hooks/firestore';
 
 const SideChatBar: FunctionComponent = () => {
+  const router = useRouter();
   const docRef = doc(db, "chat", me.email);
   const [value] = useDocument(docRef);
 
@@ -57,9 +59,15 @@ const SideChatBar: FunctionComponent = () => {
       return;
       // TODO: email만 입력 가능하도록 제한 두어야함
     } else if (value?.data()?.friends?.includes(input) === false) {
+
+      const senderRef = doc(db, "chat", input);
       await updateDoc(docRef, {
         friends: arrayUnion(input)
       });
+      await updateDoc(senderRef, {
+        friends: arrayUnion(me.email)
+      });
+      router.push(`/chat/${input}`);
     }
   }
 
