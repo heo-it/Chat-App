@@ -35,13 +35,13 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
     setInputValue("");
   };
 
-  const formattedDate = (timestamp: Timestamp) => {
-    return dayjs(timestamp.toDate()).format("YYYY.MM.DD");
-  };
+  const formattedDate = (timestamp: Timestamp) => (
+    dayjs(timestamp.toDate()).format("YYYY.MM.DD")
+  );
 
-  const formattedTime = (timestamp: Timestamp) => {
-    return dayjs(timestamp.toDate()).format("HH:mm");
-  };
+  const formattedTime = (timestamp: Timestamp) => (
+    dayjs(timestamp.toDate()).format("HH:mm")
+  );
 
   return (
     <div className={styles.container}>
