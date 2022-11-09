@@ -8,8 +8,10 @@ import { db } from '../firebase';
 import {
   addDoc,
   collection,
+  Timestamp
 } from 'firebase/firestore';
 
+import dayjs from 'dayjs';
 
 type ChatroomProps = {
   id: string,
@@ -33,6 +35,13 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
     setInputValue("");
   };
 
+  const formattedDate = (timestamp: Timestamp) => {
+    return dayjs(timestamp.toDate()).format("YYYY.MM.DD");
+  };
+
+  const formattedTime = (timestamp: Timestamp) => {
+    return dayjs(timestamp.toDate()).format("HH:mm");
+  };
 
   return (
     <div className={styles.container}>
@@ -42,17 +51,19 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
       </div>
       <ul className={styles.chatBox}>
         {
-              <p className={styles.hr}>2016.02.03</p>
-              {/* <hr /> */}
-
               <div className={styles.chatItem}>
           chats &&
           chats.map((chat: FChatItemProps, i: number) =>
             <li key={i} className={styles.list}>
+              {
+                (i === 0 ||
+                formattedDate(chat.createAt) != formattedDate(chats[i - 1].createAt)) &&
+                <p className={styles.hr}>{formattedDate(chat.createAt)}</p>
+              }
                 <BiUserCircle className={styles.image} color="gray" size={40} />
-                  <p className={styles.sendDate}>- 오후 3시 20분</p>
                   <p className={styles.sender}>{chat.sender}</p>
                   <p className={styles.text}>{chat.message}</p>
+                  <p className={styles.sendDate}>{`- ${formattedTime(chat.createAt)}`}</p>
                 </div>
               </div>
             </li>
