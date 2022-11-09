@@ -19,11 +19,12 @@ import { useDocument, useCollection } from 'react-firebase-hooks/firestore';
 
 const SideChatBar: FunctionComponent = () => {
   const router = useRouter();
-  const docRef = doc(db, "chat", me.email);
-  const [value] = useDocument(docRef);
 
-  const q = query(collection(db, `chat/${me.email}/message`), orderBy("createAt", "desc"));
-  const [snapshot] = useCollection(q);
+  const [snapshot] = useCollection(collection(db, "chat"));
+  const chats = snapshot?.docs.map((doc: DocumentData) => ({
+    id: doc.id,
+    ...doc.data()
+  }));
 
   /**
    * @description 내 메세지 목록 불러오기
@@ -84,7 +85,11 @@ const SideChatBar: FunctionComponent = () => {
         </div>
       </div>
       <div className={styles.chatListWrapper}>
-        {getChatList()}
+        {
+          getChatList()?.map((chat: ChatProps) =>
+            <ChatListItem key={chat.id} chat={chat} />
+          )
+        }
       </div>
     </div>
   );
