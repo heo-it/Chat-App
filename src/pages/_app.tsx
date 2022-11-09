@@ -6,11 +6,12 @@ import Login from 'components/Login';
 import me from '../user';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
 
   if (!me) {
     return <Login />
   }
+
+  return <Component {...pageProps} />
 }
 
-export default MyApp
+export default MyApp;

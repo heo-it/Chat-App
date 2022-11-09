@@ -4,21 +4,22 @@ import me from '../user';
 
 import { db } from '../firebase';
 import {
-  collection,
   doc,
-  getDocs,
   setDoc,
-} from 'firebase/firestore/lite';
+} from 'firebase/firestore';
+import { useDocument } from 'react-firebase-hooks/firestore';
 
 const Login: FunctionComponent = function () {
   const router = useRouter();
+  const docRef = doc(db, "chat", me.email);
+  const [value] = useDocument(docRef);
+
   /**
    * 회원 가입 이후 로직
    * TODO: firebase Login/Join
    */
-   const addUser = async () => {
-    const querySnapshot = await getDocs(collection(db, "chat"));
-    const isUserExist =  querySnapshot.docs?.find(doc => doc.id === me.email);
+  const addUser = async () => {
+    const isUserExist = value?.data();
 
     if (!isUserExist) {
       await setDoc(doc(db, 'chat', me.email), { friends: [] });
