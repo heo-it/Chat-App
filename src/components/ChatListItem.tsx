@@ -2,20 +2,29 @@ import React, { FunctionComponent, MouseEvent } from 'react';
 import styles from '../styles/chatListItem.module.css';
 import { useRouter } from 'next/router';
 import { BiUserCircle } from 'react-icons/bi';
-interface ChatItem {
+import { Timestamp } from 'firebase/firestore';
+
+type ChatItem = {
   id: string,
   sender: string,
-  createAt: {
-    seconds: number,
-    nanoseconds: number
-  },
   message: string
+};
+
+export type ChatItemProps = ChatItem & {
+  createAt: {
+    date: string,
+    time: string
+  }
 }
+
+export type FChatItemProps = ChatItem & {
+  createAt: Timestamp
+};
 
 type ChatListItemProps = {
   name: string,
-  messages: ChatItem[]
-}
+  messages: ChatItemProps[]
+};
 
 const ChatListItem: FunctionComponent<ChatListItemProps> = ({
   name,
