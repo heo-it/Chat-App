@@ -1,6 +1,25 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, MouseEvent, useState } from 'react'
 import styles from '../styles/chatroom.module.css';
 import { BiUserCircle } from 'react-icons/bi';
+import {
+  addDoc,
+} from 'firebase/firestore';
+
+
+const Chatroom: FunctionComponent = () => {
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const sendChat = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    await addDoc(collection(db, `chat/${id}/message`), {
+      createAt: new Date(),
+      message: inputValue,
+      sender: me.email
+    });
+    setInputValue("");
+  };
+
 
 const Chatroom: FunctionComponent = () => {
   return (
@@ -37,9 +56,16 @@ const Chatroom: FunctionComponent = () => {
         }
       </ul>
       <div className={styles.searchBox}>
-        <textarea className={styles.searchArea} placeholder="내용 작성해 주세요."></textarea>
+        <textarea
+          className={styles.searchArea}
+          placeholder="내용 작성해 주세요."
+          value={inputValue}
+          onChange={(e) =>
+            setInputValue(e.target.value)
+          }
+        ></textarea>
         <div className={styles.buttonWrapper}>
-          <button className={styles.button}>보내기</button>
+          <button className={styles.button} onClick={sendChat}>보내기</button>
         </div>
       </div>
     </div>
