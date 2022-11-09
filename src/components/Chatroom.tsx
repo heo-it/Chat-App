@@ -51,7 +51,6 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
       </div>
       <ul className={styles.chatBox}>
         {
-              <div className={styles.chatItem}>
           chats &&
           chats.map((chat: FChatItemProps, i: number) =>
             <li key={i} className={styles.list}>
@@ -60,7 +59,9 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
                 formattedDate(chat.createAt) != formattedDate(chats[i - 1].createAt)) &&
                 <p className={styles.hr}>{formattedDate(chat.createAt)}</p>
               }
+              <div className={`${styles.chatItem} ${chat.sender === me.email ? styles.chatItemRight: ''}`}>
                 <BiUserCircle className={styles.image} color="gray" size={40} />
+                <div className={`${styles.chatInfo} ${chat.sender === me.email ? styles.chatRight : ''}`}>
                   <p className={styles.sender}>{chat.sender}</p>
                   <p className={styles.text}>{chat.message}</p>
                   <p className={styles.sendDate}>{`- ${formattedTime(chat.createAt)}`}</p>
