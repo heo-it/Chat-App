@@ -7,15 +7,13 @@ import me from '../user';
 import { db } from '../firebase';
 import {
   doc,
-  getDoc,
-  getDocs,
   updateDoc,
   arrayUnion,
   collection,
   query,
   orderBy,
   DocumentData,
-} from '@firebase/firestore';
+} from 'firebase/firestore';
 import { useDocument, useCollection } from 'react-firebase-hooks/firestore';
 
 const SideChatBar: FunctionComponent = () => {
@@ -29,7 +27,7 @@ const SideChatBar: FunctionComponent = () => {
    * @description 내 메세지 목록 불러오기
    */
   const getChatList = () => {
-    const friends = value && value?.data() && value?.data()?.friends;
+    const friends = value?.data()?.friends;
     if (friends) {
       const chats = Object.assign(
         {},
@@ -58,10 +56,7 @@ const SideChatBar: FunctionComponent = () => {
     if (!input) {
       return;
       // TODO: email만 입력 가능하도록 제한 두어야함
-    } else {
-      value &&
-      value?.data() &&
-      value?.data()?.frends.includes(input) === false &&
+    } else if (value?.data()?.friends?.includes(input) === false) {
       await updateDoc(docRef, {
         friends: arrayUnion(input)
       });
