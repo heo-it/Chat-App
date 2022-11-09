@@ -1,8 +1,7 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import SideChatBar from '../components/SideChatBar';
+import React, { FunctionComponent } from 'react'
 
-const Home: NextPage = () => {
+const ChatPage: FunctionComponent = function () {
+
   return (
     <>
       <Head>
@@ -11,10 +10,12 @@ const Home: NextPage = () => {
         <meta content="Chat App" key="description"/>
       </Head>
       <main>
+        {/** @media 쿼리로 375px 보다 작을 경우 안보이게 하자. */}
         <SideChatBar />
+        <Chatroom />
       </main>
     </>
   )
 }
 
-export default Home;
+export default ChatPage;
