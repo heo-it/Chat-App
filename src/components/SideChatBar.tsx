@@ -13,6 +13,7 @@ import {
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
+import { signOut } from 'firebase/auth';
 
 export type ChatProps = {
   id: string,
@@ -62,7 +63,16 @@ const SideChatBar: FunctionComponent = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <span className={styles.unreadText}>{`안읽은 대화(2)`}</span>
+        <a
+          className={styles.logout}
+          onClick={(e) => {
+            e.preventDefault();
+            signOut(auth);
+            router.replace('/');
+          }}
+        >
+          로그아웃
+        </a>
         <button className={styles.newchatButton} onClick={addNewChat}>+ 새로운 메세지</button>
       </div>
       <div className={styles.searchContainer}>
