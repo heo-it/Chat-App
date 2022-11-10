@@ -29,7 +29,7 @@ const Login: FunctionComponent = function () {
   }
 
   if (createError) {
-    alert("회원가입 도중 오류가 발생했습니다.\n이메일을 확인해주세요.");
+    alert('회원가입 도중 오류가 발생했습니다.\n이메일을 확인해주세요.');
   }
 
   if (signInUser) {
@@ -37,7 +37,7 @@ const Login: FunctionComponent = function () {
   }
 
   if (signInError) {
-    alert("로그인 도중 오류가 발생했습니다.\n이메일 및 비밀번호를 확인해주세요.");
+    alert('로그인 도중 오류가 발생했습니다.\n이메일 및 비밀번호를 확인해주세요.');
   }
 
   return (
@@ -45,16 +45,16 @@ const Login: FunctionComponent = function () {
       <h2>Chat App 🐳</h2>
       <input
         className={styles.input}
-        type="email"
+        type='email'
         value={email}
-        placeholder="이메일을 입력하세요."
+        placeholder='이메일을 입력하세요.'
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
         className={styles.input}
-        type="password"
+        type='password'
         value={password}
-        placeholder="비밀번호를 입력하세요"
+        placeholder='비밀번호를 입력하세요'
         onChange={(e) => setPassword(e.target.value)}
       />
       <button

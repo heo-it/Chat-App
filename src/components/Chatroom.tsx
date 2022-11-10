@@ -24,7 +24,9 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
   chats
 }: ChatroomProps) => {
   const [user, loading, error] = useAuthState(auth);
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const scrollRef = useRef<HTMLLIElement>(null);
 
   const sendChat = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -34,15 +36,15 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
       message: inputValue,
       sender: user?.email
     });
-    setInputValue("");
+    setInputValue('');
   };
 
   const formattedDate = (timestamp: Timestamp) => (
-    dayjs(timestamp.toDate()).format("YYYY.MM.DD")
+    dayjs(timestamp.toDate()).format('YYYY.MM.DD')
   );
 
   const formattedTime = (timestamp: Timestamp) => (
-    dayjs(timestamp.toDate()).format("HH:mm")
+    dayjs(timestamp.toDate()).format('HH:mm')
   );
 
   useEffect(() => {
@@ -69,10 +71,10 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
                 <p className={styles.hr}>{formattedDate(chat.createAt)}</p>
               }
               <div className={`${styles.chatItem} ${chat.sender === user?.email ? styles.chatItemRight: ''}`}>
-                <BiUserCircle className={styles.image} color="gray" size={40} />
+                <BiUserCircle className={styles.image} size={40} />
                 <div className={`${styles.chatInfo} ${chat.sender === user?.email ? styles.chatRight : ''}`}>
                   <p className={styles.sender}>{chat.sender}</p>
-                  <p className={styles.text}>{chat.message}</p>
+                  <p className={styles.message}>{chat.message}</p>
                   <p className={styles.sendDate}>{`- ${formattedTime(chat.createAt)}`}</p>
                 </div>
               </div>
@@ -83,7 +85,7 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
       <div className={styles.searchBox}>
         <textarea
           className={styles.searchArea}
-          placeholder="내용 작성해 주세요."
+          placeholder='내용 작성해 주세요.'
           value={inputValue}
           onChange={(e) =>
             setInputValue(e.target.value)

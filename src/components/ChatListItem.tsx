@@ -47,7 +47,7 @@ const ChatListItem: FunctionComponent<ChatListItemProps> = ({
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
 
-  const q = query(collection(db, `chat/${chat.id}/message`), orderBy("createAt", "desc"));
+  const q = query(collection(db, `chat/${chat.id}/message`), orderBy('createAt', 'desc'));
   const [snapshot] = useCollection(q);
   const chats = snapshot?.docs.map((doc: DocumentData) => doc.data());
 
@@ -57,10 +57,10 @@ const ChatListItem: FunctionComponent<ChatListItemProps> = ({
   };
 
   const formattedDate = (timestamp: Timestamp) => (
-    dayjs(timestamp.toDate()).format("YYYY.MM.DD")
+    dayjs(timestamp.toDate()).format('YYYY.MM.DD')
   );
 
-  const docRef = doc(db, "chat", chat.id);
+  const docRef = doc(db, 'chat', chat.id);
   const [value] = useDocument(docRef);
 
   const getSender = () => (

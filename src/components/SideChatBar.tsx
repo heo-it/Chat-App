@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent } from 'react';
 import styles from '../styles/sideChatBar.module.css';
 import { BiSearch } from 'react-icons/bi';
 import ChatListItem from './ChatListItem';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 import { db } from '../firebase';
 import {
@@ -24,7 +24,7 @@ const SideChatBar: FunctionComponent = () => {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
 
-  const [snapshot] = useCollection(collection(db, "chat"));
+  const [snapshot] = useCollection(collection(db, 'chat'));
   const chats = snapshot?.docs.map((doc: DocumentData) => ({
     id: doc.id,
     ...doc.data()
@@ -49,13 +49,13 @@ const SideChatBar: FunctionComponent = () => {
    * @description 새 메세지 추가
    */
   const addNewChat = async () => {
-    const input = prompt("메세지를 보낼 친구의 이메일을 입력해주세요 :)");
+    const input = prompt('메세지를 보낼 친구의 이메일을 입력해주세요 :)');
 
     if (!input) {
       return;
       // TODO: email만 입력 가능하도록 제한 두어야함
     } else if (!isChat(input)) {
-      const docRef = await addDoc(collection(db, "chat"), { friends: [user?.email, input] });
+      const docRef = await addDoc(collection(db, 'chat'), { friends: [user?.email, input] });
       router.push(`/chat/${docRef.id}`);
     }
   }
@@ -77,8 +77,8 @@ const SideChatBar: FunctionComponent = () => {
       </div>
       <div className={styles.searchContainer}>
         <div className={styles.searchBox}>
-          <BiSearch size={20} color="gray" />
-          <input className={styles.searchInput} placeholder="대화 검색하기" />
+          <BiSearch size={20} color='gray' />
+          <input className={styles.searchInput} placeholder='대화 검색하기' />
         </div>
       </div>
       <div className={styles.chatListWrapper}>
