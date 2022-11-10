@@ -11,8 +11,9 @@ import {
   DocumentData,
 } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
+
 import { auth } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
 
 import isEmail from 'util/isEmail';

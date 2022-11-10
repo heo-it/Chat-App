@@ -29,7 +29,7 @@ const ChatListItem: FunctionComponent<ChatListItemProps> = ({
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
 
-  const q = query(collection(db, `chat/${chat.id}/message`), orderBy('createAt', 'desc'));
+  const q = query(collection(db, `chat/${chat.id}/message`), orderBy('createAt'));
   const [snapshot] = useCollection(q);
   const chats = snapshot?.docs.map((doc: DocumentData) => doc.data());
 
