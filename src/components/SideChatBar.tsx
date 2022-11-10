@@ -11,9 +11,12 @@ import {
   DocumentData,
 } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
+
 import { auth } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
+
+import isEmail from 'util/isEmail';
 
 export type ChatProps = {
   id: string,
@@ -75,7 +78,9 @@ const SideChatBar: FunctionComponent = () => {
 
     if (!input) {
       return;
-      // TODO: email만 입력 가능하도록 제한 두어야함
+    } else if (!isEmail(input)) {
+      alert("이메일 형식이 잘못되었습니다.\n다시 입력해주세요 :(");
+      return;
     } else if (!isChat(input)) {
       const docRef = await addDoc(collection(db, 'chat'), { friends: [user?.email, input] });
       router.push(`/chat/${docRef.id}`);

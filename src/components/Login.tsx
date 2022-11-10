@@ -20,7 +20,13 @@ const Login: FunctionComponent = function () {
     signInUser,
     signInLoading,
     signInError,
-  ] = useSignInWithEmailAndPassword(auth)
+  ] = useSignInWithEmailAndPassword(auth);
+
+  useEffect(() => {
+    if (createError || signInError) {
+      alert(`${isCreate ? '로그인': '회원가입'} 도중 오류가 발생했습니다.\n이메일 비밀번호를 확인해주세요.`);
+    }
+  }, [createUser, createError, signInUser, signInError]);
 
   return (
     <div className={styles.container}>
@@ -41,8 +47,9 @@ const Login: FunctionComponent = function () {
       />
       <button
         className={styles.button}
-        onClick={() => isCreate ?
-          signInWithEmailAndPassword(email, password) : createUserWithEmailAndPassword(email, password)
+        onClick={() =>
+          isCreate ?
+            signInWithEmailAndPassword(email, password) : createUserWithEmailAndPassword(email, password)
         }
       >
         {isCreate ? '로그인' : '회원가입'}
