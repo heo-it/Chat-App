@@ -2,8 +2,8 @@ import React, { FunctionComponent, MouseEvent } from 'react';
 import styles from '../styles/chatListItem.module.css';
 import { useRouter } from 'next/router';
 import { BiUserCircle } from 'react-icons/bi';
-import { Timestamp } from 'firebase/firestore';
 import { ChatProps } from './SideChatBar';
+import { formattedDate } from 'util/getFormatted';
 
 import { db } from '../firebase';
 import {
@@ -16,8 +16,6 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
-
-import dayjs from 'dayjs';
 
 type ChatListItemProps = {
   chat: ChatProps
@@ -37,10 +35,6 @@ const ChatListItem: FunctionComponent<ChatListItemProps> = ({
     e.preventDefault();
     router.push(`/chat/${chat.id}`);
   };
-
-  const formattedDate = (timestamp: Timestamp) => (
-    dayjs(timestamp.toDate()).format('YYYY.MM.DD')
-  );
 
   const getSender = (friends: string[]) => (
     friends.find((friend: string) => friend !== user?.email)

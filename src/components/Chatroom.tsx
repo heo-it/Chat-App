@@ -14,8 +14,8 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 
-import dayjs from 'dayjs';
 import { LinkItUrl } from 'react-linkify-it';
+import { formattedDate, formattedTime } from '../util/getFormatted';
 
 type ChatItem = {
   id: string,
@@ -48,14 +48,6 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
     });
     setInputValue('');
   };
-
-  const formattedDate = (timestamp: Timestamp) => (
-    dayjs(timestamp.toDate()).format('YYYY.MM.DD')
-  );
-
-  const formattedTime = (timestamp: Timestamp) => (
-    dayjs(timestamp.toDate()).format('HH:mm')
-  );
 
   const docRef = doc(db, 'chat', id);
   const [value] = useDocument(docRef);
