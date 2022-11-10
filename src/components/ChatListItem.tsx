@@ -74,7 +74,7 @@ const ChatListItem: FunctionComponent<ChatListItemProps> = ({
             <BiUserCircle className={styles.image} size={50} width={50} height={50} />
             <div className={styles.textContainer}>
               <div className={styles.information}>
-                <span className={styles.name}>{getSender()} </span>
+                <span className={styles.name} dangerouslySetInnerHTML={{ __html: getSender(chat.friends) as string}} />
                 <span className={styles.date}>• {chats?.[0] ? formattedDate(chats[0].createAt) : ''}</span>
               </div>
               <p className={styles.preview}>{chats?.[0] ? chats[0].message : ''}</p>

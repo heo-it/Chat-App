@@ -42,6 +42,9 @@
   overflow: hidden;
 }
 
+.name strong {
+  color: #00C9B0;
+}
 .date {
   padding-top: 0.2rem;
   font-size: small;

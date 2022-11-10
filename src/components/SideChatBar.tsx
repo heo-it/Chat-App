@@ -32,6 +32,18 @@ const SideChatBar: FunctionComponent = () => {
 
   const [searchInput, setSearchInput] = useState<string>('');
 
+  const highlightText = (friends: string[], part: string) => (
+    friends.map((f: string) => {
+      if (f.includes(part) && f != user?.email) {
+        const storng = f.split(part).map((normal: string, i: number) =>
+          i > 0 ? `<STRONG>${part}</STRONG>${normal}` : normal
+        );
+        return storng.join('');
+      }
+      return f;
+    })
+  );
+
   /**
    * @description 내 메세지 목록 불러오기
    */
@@ -40,6 +52,10 @@ const SideChatBar: FunctionComponent = () => {
       chats
         ?.filter((chat: ChatProps) => chat.friends.includes(user?.email as string))
         .filter((chat: ChatProps) => chat.friends.filter((f: string) => f.includes(search)).length > 0)
+        .map((chat: ChatProps) => ({
+          id : chat.id,
+          friends: highlightText(chat.friends, search)
+        }))
      : chats?.filter((chat: ChatProps) => chat.friends.includes(user?.email as string))
   );
 
