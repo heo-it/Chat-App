@@ -4,7 +4,6 @@ import Head from 'next/head';
 import SideChatBar from 'components/SideChatBar';
 import Chatroom from 'components/Chatroom';
 import { FChatItemProps } from '../../components/ChatListItem';
-import me from '../../user';
 
 import { db } from '../../firebase';
 import {
@@ -15,26 +14,32 @@ import {
 } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
+import { auth } from '../../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
 const ChatPage: FunctionComponent = function () {
   const router = useRouter();
   const id = router.query.id as string;
+  const [user, loading, error] = useAuthState(auth);
 
-  const getChats = (email: string, senderId: string) => {
+  if (!user) {
+    router.push("/");
+  }
+
+  const getChats = () => {
     /**
-       * @description 나에게 보낸 메세지 불러오는 로직
-       */
-    const q = query(collection(db, `chat/${email}/message`), orderBy("createAt"));
+     * @description 나에게 보낸 메세지 불러오는 로직
+     */
+    const q = query(collection(db, `chat/${id}/message`), orderBy("createAt", "desc"));
     const [snapshot] = useCollection(q);
 
     const chats = snapshot?.docs
       .map((doc: DocumentData) => doc.data())
-      .filter(({ sender }: FChatItemProps) => sender === senderId);
 
     return chats != null ? chats : [];
   };
 
-  const allChats = [...getChats(me.email, id), ...getChats(id, me.email)]
-    .sort((a: FChatItemProps, b: FChatItemProps) => a.createAt.seconds - b.createAt.seconds);
+  const allChats = getChats().sort((a: FChatItemProps, b: FChatItemProps) => a.createAt.seconds - b.createAt.seconds);
 
   return (
     <>

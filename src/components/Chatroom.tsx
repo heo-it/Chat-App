@@ -2,7 +2,6 @@ import React, { FunctionComponent, MouseEvent, useState } from 'react'
 import styles from '../styles/chatroom.module.css';
 import { BiUserCircle } from 'react-icons/bi';
 import { FChatItemProps } from './ChatListItem';
-import me from '../user';
 
 import { db } from '../firebase';
 import {
@@ -10,6 +9,8 @@ import {
   collection,
   Timestamp
 } from 'firebase/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
 
 import dayjs from 'dayjs';
 
@@ -22,6 +23,7 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
   id,
   chats
 }: ChatroomProps) => {
+  const [user, loading, error] = useAuthState(auth);
   const [inputValue, setInputValue] = useState<string>("");
 
   const sendChat = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -30,7 +32,7 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
     await addDoc(collection(db, `chat/${id}/message`), {
       createAt: new Date(),
       message: inputValue,
-      sender: me.email
+      sender: user?.email
     });
     setInputValue("");
   };
@@ -59,9 +61,9 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
                 formattedDate(chat.createAt) != formattedDate(chats[i - 1].createAt)) &&
                 <p className={styles.hr}>{formattedDate(chat.createAt)}</p>
               }
-              <div className={`${styles.chatItem} ${chat.sender === me.email ? styles.chatItemRight: ''}`}>
+              <div className={`${styles.chatItem} ${chat.sender === user?.email ? styles.chatItemRight: ''}`}>
                 <BiUserCircle className={styles.image} color="gray" size={40} />
-                <div className={`${styles.chatInfo} ${chat.sender === me.email ? styles.chatRight : ''}`}>
+                <div className={`${styles.chatInfo} ${chat.sender === user?.email ? styles.chatRight : ''}`}>
                   <p className={styles.sender}>{chat.sender}</p>
                   <p className={styles.text}>{chat.message}</p>
                   <p className={styles.sendDate}>{`- ${formattedTime(chat.createAt)}`}</p>

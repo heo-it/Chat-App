@@ -2,22 +2,25 @@ import React, { FunctionComponent } from "react";
 import styles from '../styles/sideChatBar.module.css';
 import { BiSearch } from 'react-icons/bi';
 import ChatListItem from './ChatListItem';
-import me from '../user';
 import { useRouter } from "next/router";
 
 import { db } from '../firebase';
 import {
-  doc,
-  updateDoc,
-  arrayUnion,
+  addDoc,
   collection,
-  query,
-  orderBy,
   DocumentData,
 } from 'firebase/firestore';
-import { useDocument, useCollection } from 'react-firebase-hooks/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
+
+export type ChatProps = {
+  id: string,
+  friends: string[]
+}
 
 const SideChatBar: FunctionComponent = () => {
+  const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
 
   const [snapshot] = useCollection(collection(db, "chat"));
@@ -29,25 +32,16 @@ const SideChatBar: FunctionComponent = () => {
   /**
    * @description 내 메세지 목록 불러오기
    */
-  const getChatList = () => {
-    const friends = value?.data()?.friends;
-    if (friends) {
-      const chats = Object.assign(
-        {},
-        ...friends.map((name: string) => ({
-          [name]: snapshot?.docs
-            .filter((doc: DocumentData) => doc.data().sender === name)
-            .map((doc: DocumentData) => ({
-              id: doc.id,
-              ...doc.data(),
-            })),
-        })),
-      );
+  const getChatList = () => (
+    chats?.filter((chat: ChatProps) => chat.friends.includes(user?.email as string))
+  );
 
-      return Object.keys(chats).map((user, index) =>
-        <ChatListItem key={index} name={user} messages={chats[user]} />
-      )
-    }
+  const isChat = (username: string) => {
+    const result =  chats?.filter((chat: ChatProps) => 
+      chat.friends.includes(user?.email as string) && chat.friends.includes(username)
+    );
+
+    return result && result.length > 0;
   }
 
   /**
@@ -59,16 +53,9 @@ const SideChatBar: FunctionComponent = () => {
     if (!input) {
       return;
       // TODO: email만 입력 가능하도록 제한 두어야함
-    } else if (value?.data()?.friends?.includes(input) === false) {
-
-      const senderRef = doc(db, "chat", input);
-      await updateDoc(docRef, {
-        friends: arrayUnion(input)
-      });
-      await updateDoc(senderRef, {
-        friends: arrayUnion(me.email)
-      });
-      router.push(`/chat/${input}`);
+    } else if (!isChat(input)) {
+      const docRef = await addDoc(collection(db, "chat"), { friends: [user?.email, input] });
+      router.push(`/chat/${docRef.id}`);
     }
   }
 

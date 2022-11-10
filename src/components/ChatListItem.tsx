@@ -7,12 +7,16 @@ import { ChatProps } from './SideChatBar';
 
 import { db } from '../firebase';
 import {
+  doc,
   collection,
   query,
   orderBy,
   DocumentData,
 } from 'firebase/firestore';
 import { useDocument, useCollection } from 'react-firebase-hooks/firestore';
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
 
 import dayjs from 'dayjs';
 
@@ -40,6 +44,7 @@ type ChatListItemProps = {
 const ChatListItem: FunctionComponent<ChatListItemProps> = ({
   chat
 }: ChatListItemProps) => {
+  const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
 
   const q = query(collection(db, `chat/${chat.id}/message`), orderBy("createAt", "desc"));
@@ -54,14 +59,22 @@ const ChatListItem: FunctionComponent<ChatListItemProps> = ({
   const formattedDate = (timestamp: Timestamp) => (
     dayjs(timestamp.toDate()).format("YYYY.MM.DD")
   );
+
+  const docRef = doc(db, "chat", chat.id);
+  const [value] = useDocument(docRef);
+
+  const getSender = () => (
+    value?.data()?.friends.find((friend: string) => friend !== user?.email)
+  );
+
   return (
-            <span className={styles.name}>{name}</span>
     chats ?
       <a onClick={handleChatClick}>
         <div className={styles.container}>
             <BiUserCircle color="gray" size={60} />
             <div className={styles.textContainer}>
               <div className={styles.information}>
+                <span className={styles.name}>{getSender()} </span>
                 <span className={styles.date}>• {formattedDate(chats[0].createAt)}</span>
               </div>
               <p className={styles.preview}>{chats[0].message}</p>
