@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styles from '../styles/sideChatBar.module.css';
 import { BiSearch } from 'react-icons/bi';
 import ChatListItem from './ChatListItem';
@@ -30,11 +30,17 @@ const SideChatBar: FunctionComponent = () => {
     ...doc.data()
   }));
 
+  const [searchInput, setSearchInput] = useState<string>('');
+
   /**
    * @description 내 메세지 목록 불러오기
    */
-  const getChatList = () => (
-    chats?.filter((chat: ChatProps) => chat.friends.includes(user?.email as string))
+  const getChatList = (search?: string) => (
+    search ?
+      chats
+        ?.filter((chat: ChatProps) => chat.friends.includes(user?.email as string))
+        .filter((chat: ChatProps) => chat.friends.filter((f: string) => f.includes(search)).length > 0)
+     : chats?.filter((chat: ChatProps) => chat.friends.includes(user?.email as string))
   );
 
   const isChat = (username: string) => {
@@ -78,12 +84,20 @@ const SideChatBar: FunctionComponent = () => {
       <div className={styles.searchContainer}>
         <div className={styles.searchBox}>
           <BiSearch size={20} color='gray' />
-          <input className={styles.searchInput} placeholder='대화 검색하기' />
+          <input 
+            className={styles.searchInput}
+            value={searchInput}
+            onChange={(e) => {
+              e.preventDefault();
+              setSearchInput(e.target.value)
+            }}
+            placeholder='대화 검색하기'
+          />
         </div>
       </div>
       <div className={styles.chatListWrapper}>
         {
-          getChatList()?.map((chat: ChatProps) =>
+          getChatList(searchInput)?.map((chat: ChatProps) =>
             <ChatListItem key={chat.id} chat={chat} />
           )
         }
