@@ -1,36 +1,59 @@
 .container {
   display: flex;
   flex-direction: row;
-  padding: 0.8rem 1rem;
+  flex-wrap: nowrap;
+  padding: 0.8rem;
   border-bottom: 1px solid #ddd;
   align-items: center;
+  cursor: pointer;
+}
+
+.displayNONE {
+  display: none;
 }
 
 .textContainer {
   display: flex;
   flex-direction: column;
-  width: max-content;
+  width: 100%;
+  overflow: hidden;
   padding: 0.5rem;
 }
 
+.image {
+  flex-shrink: 0;
+  color:gray;
+}
+
 .information {
+  width: 100%;
   display: flex;
   flex-direction: row;
-  margin-bottom: 0.2rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
   align-items: center;
 }
 
 .name {
+  width: fit-content;
   color: #6C6C6B;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .date {
+  padding-top: 0.2rem;
   font-size: small;
   color: #A4A4A3;
 }
 
 .preview {
+  width: 100%;
   margin: 0;
   font-size: small;
   color: #A4A4A3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

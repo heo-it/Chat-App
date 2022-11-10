@@ -61,7 +61,7 @@ const SideChatBar: FunctionComponent = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${router.query.id ? styles.chatroom : styles.home}`}>
       <div className={styles.header}>
         <a
           className={styles.logout}

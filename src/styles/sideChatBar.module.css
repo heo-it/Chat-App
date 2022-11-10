@@ -9,14 +9,18 @@
 
 .header {
   display: flex;
-  height: 8rem;
+  flex-direction: row;
+  flex-shrink: 0;
+  height: 6rem;
   border-bottom: 1px solid #ddd;
   align-items: center;
   padding: 0 1rem;
 }
 
-.unreadText {
+.logout {
   flex-grow: 1;
+  color: #296074;
+  cursor: pointer;
 }
 
 .newchatButton {
@@ -51,8 +55,22 @@
   overflow-y: scroll;
 }
 
-@media (max-width: 375px) {
+@media screen and (max-width: 1024px) {
   .container {
     width: 40%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .container {
+    width: 100%;
+  }
+
+  .chatroom {
+    display: none !important;
+  }
+
+  .home {
+    width: 100%;
   }
 }

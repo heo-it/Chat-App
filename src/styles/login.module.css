@@ -8,6 +8,10 @@
   border: 1px solid #ddd;
 }
 
+.icon {
+  flex-shrink: 0;
+}
+
 .input {
   width: 80%;
   padding: 0.5rem;

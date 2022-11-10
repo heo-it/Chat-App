@@ -71,7 +71,7 @@ const ChatListItem: FunctionComponent<ChatListItemProps> = ({
     chats ?
       <a onClick={handleChatClick}>
         <div className={styles.container}>
-            <BiUserCircle color="gray" size={60} />
+            <BiUserCircle className={styles.image} size={50} width={50} height={50} />
             <div className={styles.textContainer}>
               <div className={styles.information}>
                 <span className={styles.name}>{getSender()} </span>

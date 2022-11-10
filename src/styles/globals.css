@@ -33,3 +33,10 @@ a {
   box-sizing: border-box;
   border: 0 solid #e5e7eb;
 }
+
+@media screen and (max-width: 1024px) {
+  main {
+    width: 100%;
+    height: 100vh;
+  }
+}

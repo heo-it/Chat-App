@@ -8,9 +8,10 @@
 }
 
 .header {
-  height: 7rem;
+  height: 6rem;
   padding: 1rem 2rem;
   border-bottom: 1px solid #ddd;
+  flex-shrink: 0;
 }
 
 .name {
@@ -39,7 +40,6 @@
   margin-bottom: 1rem;
 }
 
-
 .hr {
   display: flex;
   align-items: center;
@@ -63,14 +63,21 @@
   padding: 0.5rem 1rem;
 }
 
+.image {
+  flex-shrink: 0;
+  color:gray;
+}
+
 .chatItemRight { 
   flex-direction: row-reverse;
 }
 
 .chatInfo {
+  width: fit-content;
   display: flex;
   flex-direction: column;
   margin-left: 1rem;
+  overflow: hidden;
 }
 
 .chatRight {
@@ -84,13 +91,19 @@
 }
 
 .sender {
+  width: 100%;
   color: #4D4C44;
   font-size: large;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.text {
+.message {
   color: #4D4C44;
   font-size: 0.95rem;
+  white-space: pre;
+  text-overflow: ellipsis;
 }
 
 .sendDate {
@@ -124,4 +137,24 @@
   color: #FFFFFF;
   background-color: #00C9B0;
   border-radius: 20px;
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .container {
+    width: 100%;
+  }
+
+  .sender {
+    font-size: medium;
+  }
+
+  .message {
+    font-size: small;
+  }
 }
