@@ -20,23 +20,6 @@ import { auth } from '../firebase';
 
 import dayjs from 'dayjs';
 
-type ChatItem = {
-  id: string,
-  sender: string,
-  message: string
-};
-
-export type ChatItemProps = ChatItem & {
-  createAt: {
-    date: string,
-    time: string
-  }
-}
-
-export type FChatItemProps = ChatItem & {
-  createAt: Timestamp
-};
-
 type ChatListItemProps = {
   chat: ChatProps
 };

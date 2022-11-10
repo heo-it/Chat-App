@@ -1,12 +1,10 @@
-import React, { FunctionComponent, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import styles from '../styles/login.module.css';
+
 import { auth } from '../firebase';
 import { useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 
-import styles from '../styles/login.module.css';
-
 const Login: FunctionComponent = function () {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isCreate, setIsCreate] = useState(false);
@@ -22,23 +20,7 @@ const Login: FunctionComponent = function () {
     signInUser,
     signInLoading,
     signInError,
-  ] = useSignInWithEmailAndPassword(auth);
-
-  if (createUser) {
-    setIsCreate(true);
-  }
-
-  if (createError) {
-    alert('회원가입 도중 오류가 발생했습니다.\n이메일을 확인해주세요.');
-  }
-
-  if (signInUser) {
-    router.replace('/');
-  }
-
-  if (signInError) {
-    alert('로그인 도중 오류가 발생했습니다.\n이메일 및 비밀번호를 확인해주세요.');
-  }
+  ] = useSignInWithEmailAndPassword(auth)
 
   return (
     <div className={styles.container}>

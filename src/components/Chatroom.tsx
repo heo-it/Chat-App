@@ -1,7 +1,6 @@
 import React, { FunctionComponent, MouseEvent, useState, useRef, useEffect } from 'react'
 import styles from '../styles/chatroom.module.css';
 import { BiUserCircle } from 'react-icons/bi';
-import { FChatItemProps } from './ChatListItem';
 
 import { db } from '../firebase';
 import {
@@ -15,9 +14,16 @@ import { auth } from '../firebase';
 import dayjs from 'dayjs';
 import { LinkItUrl } from 'react-linkify-it';
 
+type ChatItem = {
+  id: string,
+  sender: string,
+  message: string
+  createAt: Timestamp
+};
+
 type ChatroomProps = {
   id: string,
-  chats: FChatItemProps[];
+  chats: ChatItem[];
 };
 
 const Chatroom: FunctionComponent<ChatroomProps> = ({
@@ -64,7 +70,7 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
       <ul className={styles.chatBox}>
         {
           chats &&
-          chats.map((chat: FChatItemProps, i: number) =>
+          chats.map((chat: ChatItem, i: number) =>
             <li key={i} className={styles.list} ref={i === chats.length - 1 ? scrollRef : null}>
               {
                 (i === 0 ||
