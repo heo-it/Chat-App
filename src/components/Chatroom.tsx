@@ -1,4 +1,4 @@
-import React, { FunctionComponent, MouseEvent, useState } from 'react'
+import React, { FunctionComponent, MouseEvent, useState, useRef, useEffect } from 'react'
 import styles from '../styles/chatroom.module.css';
 import { BiUserCircle } from 'react-icons/bi';
 import { FChatItemProps } from './ChatListItem';
@@ -45,6 +45,13 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
     dayjs(timestamp.toDate()).format("HH:mm")
   );
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end'
+    });
+  }, [chats]);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -55,7 +62,7 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
         {
           chats &&
           chats.map((chat: FChatItemProps, i: number) =>
-            <li key={i} className={styles.list}>
+            <li key={i} className={styles.list} ref={i === chats.length - 1 ? scrollRef : null}>
               {
                 (i === 0 ||
                 formattedDate(chat.createAt) != formattedDate(chats[i - 1].createAt)) &&
