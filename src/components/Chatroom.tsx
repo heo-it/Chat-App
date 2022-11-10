@@ -17,11 +17,12 @@ import { auth } from '../firebase';
 import { LinkItUrl } from 'react-linkify-it';
 import { formattedDate, formattedTime } from '../util/getFormatted';
 
-type ChatItem = {
+export type ChatItem = {
   id: string,
   sender: string,
-  message: string
-  createAt: Timestamp
+  message: string,
+  createAt: Timestamp,
+  status: boolean
 };
 
 type ChatroomProps = {
@@ -44,7 +45,8 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
     await addDoc(collection(db, `chat/${id}/message`), {
       createAt: new Date(),
       message: inputValue,
-      sender: user?.email
+      sender: user?.email,
+      status : false
     });
     setInputValue('');
   };
