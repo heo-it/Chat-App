@@ -4,10 +4,13 @@ import { BiUserCircle } from 'react-icons/bi';
 
 import { db } from '../firebase';
 import {
+  doc,
   addDoc,
   collection,
   Timestamp
 } from 'firebase/firestore';
+import { useDocument } from 'react-firebase-hooks/firestore';
+
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 
@@ -54,6 +57,13 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
     dayjs(timestamp.toDate()).format('HH:mm')
   );
 
+  const docRef = doc(db, 'chat', id);
+  const [value] = useDocument(docRef);
+
+  const getSender = () => (
+    value?.data()?.friends.find((friend: string) => friend !== user?.email)
+  );
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({
       behavior: 'smooth',
@@ -64,7 +74,7 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <p className={styles.name}>호예진</p>
+        <p className={styles.name}>{getSender()}</p>
         <p className={styles.role}>프론트엔드 개발자</p>
       </div>
       <ul className={styles.chatBox}>
