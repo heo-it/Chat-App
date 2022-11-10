@@ -7,13 +7,12 @@ import { ChatProps } from './SideChatBar';
 
 import { db } from '../firebase';
 import {
-  doc,
   collection,
   query,
   orderBy,
   DocumentData,
 } from 'firebase/firestore';
-import { useDocument, useCollection } from 'react-firebase-hooks/firestore';
+import { useCollection } from 'react-firebase-hooks/firestore';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
@@ -43,11 +42,8 @@ const ChatListItem: FunctionComponent<ChatListItemProps> = ({
     dayjs(timestamp.toDate()).format('YYYY.MM.DD')
   );
 
-  const docRef = doc(db, 'chat', chat.id);
-  const [value] = useDocument(docRef);
-
-  const getSender = () => (
-    value?.data()?.friends.find((friend: string) => friend !== user?.email)
+  const getSender = (friends: string[]) => (
+    friends.find((friend: string) => friend !== user?.email)
   );
 
   return (
