@@ -13,6 +13,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 
 import dayjs from 'dayjs';
+import { LinkItUrl } from 'react-linkify-it';
 
 type ChatroomProps = {
   id: string,
@@ -74,7 +75,11 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
                 <BiUserCircle className={styles.image} size={40} />
                 <div className={`${styles.chatInfo} ${chat.sender === user?.email ? styles.chatRight : ''}`}>
                   <p className={styles.sender}>{chat.sender}</p>
-                  <p className={styles.message}>{chat.message}</p>
+                  <LinkItUrl>
+                    <p className={styles.message}>
+                      {chat.message}
+                    </p>
+                  </LinkItUrl>
                   <p className={styles.sendDate}>{`- ${formattedTime(chat.createAt)}`}</p>
                 </div>
               </div>
