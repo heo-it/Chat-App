@@ -14,14 +14,15 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 
-import dayjs from 'dayjs';
 import { LinkItUrl } from 'react-linkify-it';
+import { formattedDate, formattedTime } from '../util/getFormatted';
 
-type ChatItem = {
+export type ChatItem = {
   id: string,
   sender: string,
-  message: string
-  createAt: Timestamp
+  message: string,
+  createAt: Timestamp,
+  status: boolean
 };
 
 type ChatroomProps = {
@@ -44,18 +45,11 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
     await addDoc(collection(db, `chat/${id}/message`), {
       createAt: new Date(),
       message: inputValue,
-      sender: user?.email
+      sender: user?.email,
+      status : false
     });
     setInputValue('');
   };
-
-  const formattedDate = (timestamp: Timestamp) => (
-    dayjs(timestamp.toDate()).format('YYYY.MM.DD')
-  );
-
-  const formattedTime = (timestamp: Timestamp) => (
-    dayjs(timestamp.toDate()).format('HH:mm')
-  );
 
   const docRef = doc(db, 'chat', id);
   const [value] = useDocument(docRef);

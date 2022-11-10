@@ -42,10 +42,16 @@
   overflow: hidden;
 }
 
+.unread {
+  color: #000000;
+}
+
 .name strong {
   color: #00C9B0;
 }
+
 .date {
+  margin-left: 0.2rem;
   padding-top: 0.2rem;
   font-size: small;
   color: #A4A4A3;
