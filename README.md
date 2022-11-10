@@ -1,20 +1,27 @@
-# Chat App
-> 1:1 채팅 어플리케이션
-## 기능
-* [ ] 1:1 대화를 주고 받는 웹 어플리케이션을 작성해주시길 바랍니다.
-* [ ] 서버 구현은 되어 있다고 가정하고 진행하셔도 좋고 구현 가능하시면 편한 방법으로 구현하셔도 됩니다.
-* [ ] 화면은 이미지 를 참고로 하여 작성해주시길 바랍니다. (화면의 모든 기능이 꼭 존재할 필요는 없습니다.)
-* [ ] 대화 상대별로 대화방이 나뉘어 있으며, 각 대화방끼리 이동할 수 있어야 합니다.
-* [ ] 메시지를 전송하고 서로 이 내용을 확인할 수 있어야 합니다.
-* [x] React, TypeScript 로 작성해주시길 바랍니다.
-* [x] Github, Bitbucket 등 접속 가능한 Git Remote Repository로 전달 바랍니다.
+# Chat App 🐳
+<img width="1512" alt="login" src="https://user-images.githubusercontent.com/52443412/201110126-f9d7a0a6-a387-4915-97d1-02d57f2c3a48.png">
+<img width="1510" alt="chat_main" src="https://user-images.githubusercontent.com/52443412/201110021-aea04df1-17f1-4d0b-9b60-c776325c5337.png">
 
-## 선택 기능
-* [ ] Next.js로 SSR을 구현해주세요. (SEO 고려 등)
-* [ ] Responsive를 지원합니다.
-* [ ] 로그인, 로그아웃을 할 수 있습니다.
-* [ ] 비 로그인 사용자 앱 실행 시 로그인을 유도 합니다.
-* [ ] 새로운 메시지 버튼 클릭 후 새 대화방 생성 시 대화 상대 검색이 가능합니다.
-* [ ] 대화에 URL이 있는 경우 Clickable하게(실제로 동작) 출력합니다.
-* [ ] 읽지 않은 메시지가 있는 경우 화면상 표기를 다르게 합니다.
-* [ ]Production 환경을 구축하여 동작 가능한 임의의 URL로 접속 할 수 있습니다.
+## 소개
+> firebase로 구현한 1:1 웹 채팅 어플리케이션 입니다.
+>
+> ### [Chat App 바로가기](https://heo-it-chat-app.web.app/)
+
+## 기술
+- TypeScript, React, Nextjs, firebase
+- 기타: react-icons, react-linkify-it, dayjs, react-firebase-hooks
+
+## 기능
+### 1) 로그인/회원가입
+- 이메일을 이용한 로그인/회원가입이 가능합니다.
+- 로그아웃이 가능합니다.
+
+### 2) 채팅
+- 유효한 이메일 사용자와 1:1 대화가 가능합니다.
+- 대화방을 생성합니다.
+- 대화방 검색이 가능합니다.
+- 채팅에 포함된 URL 클릭시 이동 가능합니다.
+
+## TODO
+* [ ] 소셜 로그인 구현 (google, faseBook)
+* [ ] 읽지 않은 메시지 처리
