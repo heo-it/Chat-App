@@ -42,7 +42,7 @@ const Login: FunctionComponent = function () {
         className={styles.input}
         type='password'
         value={password}
-        placeholder='비밀번호를 입력하세요'
+        placeholder='비밀번호를 입력하세요. (8자리 이상)'
         onChange={(e) => setPassword(e.target.value)}
       />
       <button
