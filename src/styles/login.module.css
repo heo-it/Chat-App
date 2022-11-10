@@ -1,0 +1,39 @@
+.container {
+  flex-direction: column;
+  display: flex;
+  width: 20rem;
+  margin: 0 auto;
+  align-items: center;
+  background-color: #FFFFFF;
+  border: 1px solid #ddd;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.input {
+  width: 80%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.button {
+  width: 80%;
+  background-color: #00C9B0;
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  margin-bottom: 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.link {
+  color: #296074;
+  font-size: 0.8rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
