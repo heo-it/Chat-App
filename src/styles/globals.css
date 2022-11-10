@@ -16,9 +16,11 @@ body {
 
 main {
   width: 80%;
+  height: 100vh;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 a {

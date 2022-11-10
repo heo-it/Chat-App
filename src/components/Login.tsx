@@ -1,37 +1,80 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useRouter } from 'next/router';
-import me from '../user';
+import { auth } from '../firebase';
+import { useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 
-import { db } from '../firebase';
-import {
-  doc,
-  setDoc,
-} from 'firebase/firestore';
-import { useDocument } from 'react-firebase-hooks/firestore';
+import styles from '../styles/login.module.css';
 
 const Login: FunctionComponent = function () {
   const router = useRouter();
-  const docRef = doc(db, "chat", me.email);
-  const [value] = useDocument(docRef);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isCreate, setIsCreate] = useState(false);
+  const [
+    createUserWithEmailAndPassword,
+    createUser,
+    createLoading,
+    createError,
+  ] = useCreateUserWithEmailAndPassword(auth);
 
-  /**
-   * 회원 가입 이후 로직
-   * TODO: firebase Login/Join
-   */
-  const addUser = async () => {
-    const isUserExist = value?.data();
+  const [
+    signInWithEmailAndPassword,
+    signInUser,
+    signInLoading,
+    signInError,
+  ] = useSignInWithEmailAndPassword(auth);
 
-    if (!isUserExist) {
-      await setDoc(doc(db, 'chat', me.email), { friends: [] });
-    }
-  };
+  if (createUser) {
+    setIsCreate(true);
+  }
 
-  useEffect(() => {
-    addUser();
+  if (createError) {
+    alert("회원가입 도중 오류가 발생했습니다.\n이메일을 확인해주세요.");
+  }
+
+  if (signInUser) {
     router.replace('/');
-  }, []);
+  }
 
-  return <div>로그인 페이지</div>;
+  if (signInError) {
+    alert("로그인 도중 오류가 발생했습니다.\n이메일 및 비밀번호를 확인해주세요.");
+  }
+
+  return (
+    <div className={styles.container}>
+      <h2>Chat App 🐳</h2>
+      <input
+        className={styles.input}
+        type="email"
+        value={email}
+        placeholder="이메일을 입력하세요."
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        className={styles.input}
+        type="password"
+        value={password}
+        placeholder="비밀번호를 입력하세요"
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button
+        className={styles.button}
+        onClick={() => isCreate ?
+          signInWithEmailAndPassword(email, password) : createUserWithEmailAndPassword(email, password)
+        }
+      >
+        {isCreate ? '로그인' : '회원가입'}
+      </button>
+      <a
+        className={styles.link}
+        onClick={() => isCreate ?
+          setIsCreate(false) : setIsCreate(true)
+        }
+      >
+        {isCreate ? '먼저 회원 가입 하세요 :)' : '이미 가입된 회원이라면? 로그인 하기 :)'}
+      </a>
+    </div>
+  );
 }
 
 export default Login;
