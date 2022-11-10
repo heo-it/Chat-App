@@ -75,9 +75,9 @@ const ChatListItem: FunctionComponent<ChatListItemProps> = ({
             <div className={styles.textContainer}>
               <div className={styles.information}>
                 <span className={styles.name}>{getSender()} </span>
-                <span className={styles.date}>• {formattedDate(chats[0].createAt)}</span>
+                <span className={styles.date}>• {chats?.[0] ? formattedDate(chats[0].createAt) : ''}</span>
               </div>
-              <p className={styles.preview}>{chats[0].message}</p>
+              <p className={styles.preview}>{chats?.[0] ? chats[0].message : ''}</p>
             </div>
         </div>
       </a>
