@@ -9,6 +9,9 @@ import {
   addDoc,
   collection,
   DocumentData,
+  orderBy,
+  query,
+  Timestamp,
 } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
@@ -21,6 +24,7 @@ import isEmail from 'util/isEmail';
 export type ChatProps = {
   id: string,
   friends: string[]
+  lastCreateAt: Timestamp
 }
 
 const SideChatBar: FunctionComponent = () => {
@@ -56,10 +60,13 @@ const SideChatBar: FunctionComponent = () => {
         ?.filter((chat: ChatProps) => chat.friends.includes(user?.email as string))
         .filter((chat: ChatProps) => chat.friends.filter((f: string) => f.includes(search)).length > 0)
         .map((chat: ChatProps) => ({
+          ...chat,
           id : chat.id,
-          friends: highlightText(chat.friends, search)
+          friends: highlightText(chat.friends, search),
         }))
-     : chats?.filter((chat: ChatProps) => chat.friends.includes(user?.email as string))
+        .sort((a: ChatProps, b: ChatProps) => a.lastCreateAt < b.lastCreateAt ? 1 : -1)
+     : chats?.filter((chat: ChatProps) => chat?.friends.includes(user?.email as string))
+        .sort((a: ChatProps, b: ChatProps) => a.lastCreateAt < b.lastCreateAt ? 1 : -1)
   );
 
   const isChat = (username: string) => {
