@@ -78,12 +78,16 @@
   flex-direction: column;
   margin-left: 1rem;
   overflow: hidden;
+  padding: 0.8rem;
+  border-radius: 1rem;
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .chatRight {
   text-align: right;
   margin-left: 0;
   margin-right: 1rem;
+  background-color: #00c9b0b3;
 }
 
 .chatInfo p {
