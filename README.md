@@ -1,6 +1,7 @@
 # Chat App 🐳
 <img width="1512" alt="login" src="https://user-images.githubusercontent.com/52443412/201110126-f9d7a0a6-a387-4915-97d1-02d57f2c3a48.png">
-<img width="1510" alt="chat_main" src="https://user-images.githubusercontent.com/52443412/201110021-aea04df1-17f1-4d0b-9b60-c776325c5337.png">
+<img width="1512" alt="스크린샷 2022-11-17 오후 5 41 38" src="https://user-images.githubusercontent.com/52443412/202403872-05027577-91c2-45c6-b6f0-69b1e2c811d1.png">
+
 
 ## 소개
 > firebase로 구현한 1:1 웹 채팅 어플리케이션 입니다.
@@ -25,4 +26,4 @@
 
 ## TODO
 * [ ] 소셜 로그인 구현 (google, faseBook)
-* [ ] 말풍선 디자인
+* [x] 말풍선 디자인
