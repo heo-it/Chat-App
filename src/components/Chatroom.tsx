@@ -6,6 +6,7 @@ import { db } from '../firebase';
 import {
   doc,
   addDoc,
+  updateDoc,
   collection,
   Timestamp
 } from 'firebase/firestore';
@@ -48,6 +49,7 @@ const Chatroom: FunctionComponent<ChatroomProps> = ({
       sender: user?.email,
       status : false
     });
+    await updateDoc(doc(db, 'chat', id), { lastCreateAt: new Date() });
     setInputValue('');
   };
 
