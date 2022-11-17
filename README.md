@@ -27,3 +27,4 @@
 ## TODO
 * [ ] 소셜 로그인 구현 (google, faseBook)
 * [x] 말풍선 디자인
+* [ ] 채팅 입력 창에서 `Enter key`입력 시 즉시 메세지 전송
